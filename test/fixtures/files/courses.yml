@@ -1,0 +1,8 @@
+one:
+  course_code: CSC302
+  description: Not Intro to Engineering
+  term: F
+  projected_course_enrollment: 250
+  students_per_TA: 25
+  instructor_id: 3,
+  requirements: CSC301
