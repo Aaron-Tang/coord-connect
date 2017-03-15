@@ -8,7 +8,7 @@ class CourseController < ApplicationController
 		render json: @courses
 	end
 
-	# GET /courses.1
+	# GET /courses/1
 	def show
 		render json: @course
 	end
@@ -43,6 +43,7 @@ class CourseController < ApplicationController
 	# Use callbacks to share common setup or constraints between actions
 	def set_course
 		@course = Course.find(params[:id])
+	end
 
 	def course_params
 		params.require(:courses).permit(
