@@ -1,5 +1,7 @@
+require 'rest-client'
+
 class CourseController < ApplicationController
-	before_action :set_course, only: [:show, :update, :destroy]
+	before_action :set_course, only: [:show, :update, :destroy, :all_applicants]
 
 	# GET /courses
 	def index
@@ -38,6 +40,19 @@ class CourseController < ApplicationController
 		@course.destroy
 	end
 
+	# GET /courses/openings
+	def openings
+
+	end
+
+	# GET /courses/id/applicants
+	def all_applicants
+		p(@course.id)
+		@test = RestClient.get 'http://localhost:3000/course/1/applicants', {params: {id: @course.id}}
+		render json: @test.body
+		#p(@test)
+	end
+	
 	private
 
 	# Use callbacks to share common setup or constraints between actions
