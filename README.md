@@ -1,24 +1,41 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Prerequisites
 
-Things you may want to cover:
+1. Postgres
+2. Ruby On Rails
 
-* Ruby version
+## Installation Steps
 
-* System dependencies
+From the Console:
 
-* Configuration
+1. > $> bundle install
+2. > $> rake db:create
+3. > $> rake db:migrate
 
-* Database creation
+## Seeding data
 
-* Database initialization
+From the console:
 
-* How to run the test suite
+1. > $> rails console
 
-* Services (job queues, cache servers, search engines, etc.)
+Seeding a new Course:
 
-* Deployment instructions
+- > c = Course.new(
+    :course_code => "csc108",
+    :description => "The CSC108 Description",
+    :term => "Fall 2017",
+    :students_per_TA => 10,
+    :projected_course_enrollment => 1000,
+    :instructor_id => "Teacher_2",
+    :requirements => "None"
+    )
+    c.save!
 
-* ...
+## Starting the server
+
+From the console:
+
+> $> PORT=8080 rails server puma
+
+This will start the Rails app on port 8080.
