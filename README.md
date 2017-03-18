@@ -19,7 +19,7 @@ From the console:
 
 1. > $> rails console
 
-Seeding a new Course:
+*Seeding courses*
 
 - > c = Course.new(
     :course_code => "csc108",
@@ -31,6 +31,11 @@ Seeding a new Course:
     :requirements => "None"
     )
     c.save!
+    
+*Seeding applied_applicants*
+
+- > 
+
 
 ## Starting the server
 
