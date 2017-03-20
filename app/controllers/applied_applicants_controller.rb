@@ -49,8 +49,9 @@ before_action :set_application, only: [:show, :update, :destroy]
 
     saved_apps = []
     applications.map do |application|
+      course_code = Course.where(id: application[:course_code]).first.course_code
       @assignment = AppliedApplicant.new(
-        course_code: application[:course_code],
+        course_code: course_code,
         utorid: application[:utorid],
         status: "Assigned"
       )
