@@ -42,6 +42,17 @@ RSpec.describe AppliedApplicantsController, type: :controller do
     expect(response.body).to_not include("testuser2")
   end
 
+  it "allows you to make bulk assignments" do
+
+    post :bulk_create, { 
+      applications: 
+        [{course_code: "CSC108", utorid: "testuser"},
+         {course_code: "CSC108", utorid: "testuser2"}]
+    }
+
+    expect(AppliedApplicant.all.length).to eq(2)
+  end
+
 	describe "PATCH" do
 	    it "update application status" do
 	      @applied_applicant = AppliedApplicant.create!(

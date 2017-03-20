@@ -42,6 +42,26 @@ before_action :set_application, only: [:show, :update, :destroy]
     @assignments = AppliedApplicant.where(course_code: params[:course_code], status: "Assigned")
     render json: @assignments
   end
+  
+  def bulk_create
+    applications = params[:applications]
+
+    saved_apps = []
+    applications.map do |application|
+      @assignment = AppliedApplicant.new(
+        course_code: application[:course_code],
+        utorid: application[:utorid],
+        status: "Assigned"
+      )
+      if not @assignment.save
+        render json: @assignment.errors, status: :unprocessable_entity
+      else
+        saved_apps.push(@assignment)
+      end
+    end
+
+    render json: saved_apps
+  end
 
 	private
 
