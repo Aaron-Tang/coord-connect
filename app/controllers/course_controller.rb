@@ -1,4 +1,5 @@
 require 'rest-client'
+require 'json'
 
 class CourseController < ApplicationController
 	before_action :set_course, only: [:show, :update, :destroy, :all_applicants]
@@ -12,7 +13,10 @@ class CourseController < ApplicationController
 
 	# GET /courses/1
 	def show
-		render json: @course
+    num_positions_assigned = AppliedApplicant.where(course_code: @course.course_code).length
+		applicants_for_course = RestClient.get "http://localhost:3000/course/#{@course.id}/applicants"
+    num_applicants_applied = JSON.parse(applicants_for_course).length
+		render json: @course.as_json.merge({number_ta_applied: num_applicants_applied, number_positions_assigned: num_positions_assigned})
 	end
 
 	# POST /courses
