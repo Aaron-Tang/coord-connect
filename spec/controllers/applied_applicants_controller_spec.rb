@@ -14,6 +14,34 @@ RSpec.describe AppliedApplicantsController, type: :controller do
 	    end
 	end
 
+  it "creates an assignment" do
+    post :create, { applications: {course_code: "CSC108", utorid: "testuser"} }
+
+    assignment = AppliedApplicant.all.first
+
+    expect(assignment.utorid).to eq("testuser")
+    expect(assignment.course_code).to eq("CSC108")
+    expect(assignment.status).to eq("Assigned")
+  end
+
+  it "returns a list of assignments by course code" do
+    AppliedApplicant.create!(
+      course_code: "CSC108",
+      utorid: "testuser",
+      status: "Assigned"
+    )
+
+    AppliedApplicant.create!(
+      course_code: "CSC207",
+      utorid: "testuser2",
+      status: "Assigned"
+    )
+    get :for_course, params: {course_code: "CSC108"}
+
+    expect(response.body).to include("testuser")
+    expect(response.body).to_not include("testuser2")
+  end
+
 	describe "PATCH" do
 	    it "update application status" do
 	      @applied_applicant = AppliedApplicant.create!(

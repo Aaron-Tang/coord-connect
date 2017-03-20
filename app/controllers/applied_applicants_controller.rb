@@ -8,6 +8,17 @@ before_action :set_application, only: [:show, :update, :destroy]
 		render json: @applications
 	end
 
+	def create
+    # TODO: SET THE APPLICATION ID BY QUERYING THE APPLICANT API
+		@applied_applicant = AppliedApplicant.new(application_params.merge({status: "Assigned"}))
+
+		if @applied_applicant.save
+			render json: @applied_applicant, status: :created, location: @user
+		else
+			render json: @applied_applicant.errors, status: :unprocessable_entity
+		end
+	end
+
 	# GET /applications/1
 	def show
 		render json: @application
@@ -27,6 +38,11 @@ before_action :set_application, only: [:show, :update, :destroy]
 		@application.destroy
 	end
 
+  def for_course
+    @assignments = AppliedApplicant.where(course_code: params[:course_code], status: "Assigned")
+    render json: @assignments
+  end
+
 	private
 
 	# Use callbacks to share common setup or constraints between actions
@@ -37,6 +53,8 @@ before_action :set_application, only: [:show, :update, :destroy]
 	def application_params
 		params.require(:applications).permit(
 			:application_id,
+      :utorid,
+      :course_code,
 			:status)
 	end
 end
