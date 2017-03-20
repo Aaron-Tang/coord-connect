@@ -1,5 +1,4 @@
 class AppliedApplicantsController < ApplicationController
-skip_before_action :verify_authenticity_token
 before_action :set_application, only: [:show, :update, :destroy]
 
 	# GET /applications
