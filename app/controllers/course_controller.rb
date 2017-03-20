@@ -51,10 +51,8 @@ class CourseController < ApplicationController
 
 	# GET /courses/id/applicants
 	def all_applicants
-		p(@course.id)
-		@test = RestClient.get 'http://localhost:3000/course/1/applicants', {params: {id: @course.id}}
+		@test = RestClient.get "http://localhost:3000/course/#{@course.id}/applicants"
 		render json: @test.body
-		#p(@test)
 	end
 	
 	private
