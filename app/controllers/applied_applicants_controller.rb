@@ -39,8 +39,7 @@ before_action :set_application, only: [:show, :update, :destroy]
 	end
 
   def for_course
-
-    @course = Course.where(course_code: params[:course_code]).first
+    @course = Course.where(id: params[:course_code]).first
     @assignments = AppliedApplicant.where(course_code: @course.course_code, status: "Assigned")
     render json: @assignments
   end

@@ -25,6 +25,8 @@ RSpec.describe AppliedApplicantsController, type: :controller do
   end
 
   it "returns a list of assignments by course code" do
+    course_id = Course.create!(course_code: "CSC108").id
+
     AppliedApplicant.create!(
       course_code: "CSC108",
       utorid: "testuser",
@@ -36,7 +38,7 @@ RSpec.describe AppliedApplicantsController, type: :controller do
       utorid: "testuser2",
       status: "Assigned"
     )
-    get :for_course, params: {course_code: "CSC108"}
+    get :for_course, params: {course_code: course_id}
 
     expect(response.body).to include("testuser")
     expect(response.body).to_not include("testuser2")
