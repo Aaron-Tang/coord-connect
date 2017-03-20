@@ -44,7 +44,7 @@ before_action :set_application, only: [:show, :update, :destroy]
   end
   
   def bulk_create
-    applications = params[:applications]
+    applications = params[:assignments]
 
     saved_apps = []
     applications.map do |application|

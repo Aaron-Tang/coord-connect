@@ -45,7 +45,7 @@ RSpec.describe AppliedApplicantsController, type: :controller do
   it "allows you to make bulk assignments" do
 
     post :bulk_create, { 
-      applications: 
+      assignments: 
         [{course_code: "CSC108", utorid: "testuser"},
          {course_code: "CSC108", utorid: "testuser2"}]
     }
