@@ -39,7 +39,9 @@ before_action :set_application, only: [:show, :update, :destroy]
 	end
 
   def for_course
-    @assignments = AppliedApplicant.where(course_code: params[:course_code], status: "Assigned")
+
+    @course = Course.find(params[:course_code])
+    @assignments = AppliedApplicant.where(course_code: @course.course_code, status: "Assigned")
     render json: @assignments
   end
   
