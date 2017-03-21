@@ -14,6 +14,7 @@ From the Console:
 3. > $> rake db:migrate
 
 ## Seeding data
+Make sure you've run rake db:migrate to have all the migrations first before seeding the data.
 
 From the console:
 
