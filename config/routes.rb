@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   	resources :course
   	resources :applied_applicants
+  	resources :user
+  	get '/users', to: 'user#index'
 	get '/courses', to: 'course#index'
 	get '/courses/:id', to: 'course#show'
 	post '/courses', to: 'course#create'
