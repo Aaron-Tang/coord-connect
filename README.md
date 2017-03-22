@@ -18,7 +18,9 @@ Make sure you've run rake db:migrate to have all the migrations first before see
 
 From the console:
 
-1. > $> rake db:reset db:seed
+1. > $> rake db:reset 
+sometimes, db:reset doesn't seed the db after running. Check in rails console with Course.all.
+If there aren't any entries, run: rake db:seed in normal console to seed the db.
 
 ## Starting the server
 
