@@ -50,15 +50,18 @@ before_action :set_application, only: [:show, :update, :destroy]
     saved_apps = []
     applications.map do |application|
       course_code = Course.find(application[:course_id]).course_code
-      @assignment = AppliedApplicant.new(
-        course_code: course_code,
-        utorid: application[:utorid],
-        status: "Assigned"
-      )
-      if not @assignment.save
-        render json: @assignment.errors, status: :unprocessable_entity
-      else
-        saved_apps.push(@assignment)
+      unless AppliedApplicant.exists?(course_code: course_code, utorid: application[:utorid])
+        course_code = Course.find(application[:course_id]).course_code
+        @assignment = AppliedApplicant.new(
+          course_code: course_code,
+          utorid: application[:utorid],
+          status: "Assigned"
+        )
+        if not @assignment.save
+          render json: @assignment.errors, status: :unprocessable_entity
+        else
+          saved_apps.push(@assignment)
+        end
       end
     end
 
