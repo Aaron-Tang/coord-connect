@@ -9,6 +9,6 @@ Rails.application.routes.draw do
 	post '/courses', to: 'course#create'
 	put '/courses/:id', to: 'course#update'
 	get '/courses/:id/applicants', to: 'course#all_applicants'
-  get '/assignments/for_course/:course_code', to: 'applied_applicants#for_course'
+  get '/assignments/for_course/:course_id', to: 'applied_applicants#for_course'
   post '/assignments/bulk_create', to: 'applied_applicants#bulk_create'
 end

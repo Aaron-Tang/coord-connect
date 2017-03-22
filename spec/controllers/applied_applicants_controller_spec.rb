@@ -6,7 +6,7 @@ RSpec.describe AppliedApplicantsController, type: :controller do
 	describe "GET index" do
 	    it "returns all courses" do
 	      applied_applicant = AppliedApplicant.create!(
-	      	applicantion_id: 1, 
+	      	application_id: 1, 
 	      	status: "P"
 	      	)
 	      get :index
@@ -24,32 +24,33 @@ RSpec.describe AppliedApplicantsController, type: :controller do
     expect(assignment.status).to eq("Assigned")
   end
 
-  it "returns a list of assignments by course code" do
+  it "returns a list of assignments by course id" do
     course_id = Course.create!(course_code: "CSC108").id
-
     AppliedApplicant.create!(
       course_code: "CSC108",
       utorid: "testuser",
       status: "Assigned"
     )
-
     AppliedApplicant.create!(
       course_code: "CSC207",
       utorid: "testuser2",
       status: "Assigned"
     )
-    get :for_course, params: {course_code: course_id}
+
+    get :for_course, params: {course_id: course_id}
 
     expect(response.body).to include("testuser")
     expect(response.body).to_not include("testuser2")
   end
 
   it "allows you to make bulk assignments" do
+    c = Course.create!(course_code: "CSC108")
+
 
     post :bulk_create, { 
       assignments: 
-        [{course_code: "CSC108", utorid: "testuser"},
-         {course_code: "CSC108", utorid: "testuser2"}]
+        [{course_id: c.id, utorid: "testuser"},
+         {course_id: c.id, utorid: "testuser2"}]
     }
 
     expect(AppliedApplicant.all.length).to eq(2)
@@ -58,7 +59,7 @@ RSpec.describe AppliedApplicantsController, type: :controller do
 	describe "PATCH" do
 	    it "update application status" do
 	      @applied_applicant = AppliedApplicant.create!(
-	      	applicantion_id: 1, 
+	      	application_id: 1, 
 	      	status: "P"
 	      	)
 

@@ -39,7 +39,7 @@ before_action :set_application, only: [:show, :update, :destroy]
 	end
 
   def for_course
-    @course = Course.where(id: params[:course_code]).first
+    @course = Course.find(params[:course_id])
     @assignments = AppliedApplicant.where(course_code: @course.course_code, status: "Assigned")
     render json: @assignments
   end
@@ -49,7 +49,7 @@ before_action :set_application, only: [:show, :update, :destroy]
 
     saved_apps = []
     applications.map do |application|
-      course_code = Course.where(id: application[:course_code]).first.course_code
+      course_code = Course.find(application[:course_id]).course_code
       @assignment = AppliedApplicant.new(
         course_code: course_code,
         utorid: application[:utorid],
