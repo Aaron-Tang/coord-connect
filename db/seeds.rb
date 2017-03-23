@@ -54,26 +54,20 @@ AppliedApplicant.create([
 	{
 		:application_id => 1,
 		:status => "Accepted",
-		:utorid => "someid1",
-		:course_code => "CSC165",
-		:created_at => d2
-		},
-	{
-		:application_id => 2,
-		:status => "Pending",
 		:utorid => "someid2",
 		:course_code => "CSC148",
-		:created_at => d2    
+		:created_at => d2
 		},
+
 	{
-		:application_id => 3,
+		:application_id => 2,
 		:status => "Rejected",
 		:utorid => "someid3",
 		:course_code => "CSC165",
 		:created_at => d2 
 		},
 	{
-		:application_id => 4,
+		:application_id => 3,
 		:status => "Accepted",
 		:utorid => "someid4",
 		:course_code => "CSC236",
