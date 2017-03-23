@@ -50,26 +50,64 @@ Course.create([
 		:created_at => d1  
 	}])
 
-AppliedApplicant.create([
+Offer.create([
 	{
 		:application_id => 1,
 		:status => "Accepted",
-		:utorid => "someid2",
-		:course_code => "CSC148",
+		:utorid => "someid1",
+		:course_code => "CSC108",
 		:created_at => d2
 		},
 
 	{
 		:application_id => 2,
 		:status => "Rejected",
-		:utorid => "someid3",
-		:course_code => "CSC165",
+		:utorid => "someid2",
+		:course_code => "CSC148",
 		:created_at => d2 
 		},
 	{
 		:application_id => 3,
 		:status => "Accepted",
+		:utorid => "someid3",
+		:course_code => "CSC165",
+		:created_at => d2
+		},
+	{
+		:application_id => 4,
+		:status => "Accepted",
 		:utorid => "someid4",
 		:course_code => "CSC236",
 		:created_at => d2
-	}])
+		},
+
+	{
+		:application_id => 5,
+		:status => "Rejected",
+		:utorid => "someid5",
+		:course_code => "CSC108",
+		:created_at => d2 
+		},
+	{
+		:application_id => 6,
+		:status => "Accepted",
+		:utorid => "someid6",
+		:course_code => "CSC148",
+		:created_at => d2
+		},
+	{
+		:application_id => 7,
+		:status => "Accepted",
+		:utorid => "someid7",
+		:course_code => "CSC165",
+		:created_at => d2
+		},
+
+	{
+		:application_id => 8,
+		:status => "Rejected",
+		:utorid => "someid8",
+		:course_code => "CSC236",
+		:created_at => d2 
+		}
+	])

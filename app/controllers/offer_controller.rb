@@ -1,16 +1,16 @@
-class AppliedApplicantsController < ApplicationController
+class OfferController < ApplicationController
 before_action :set_application, only: [:show, :update, :destroy]
 
 	# GET /applications
 	def index
-		@applications = AppliedApplicant.all
+		@applications = Offer.all
 		
 		render json: @applications
 	end
 
 	def create
     # TODO: SET THE APPLICATION ID BY QUERYING THE APPLICANT API
-		@applied_applicant = AppliedApplicant.new(application_params.merge({status: "Assigned"}))
+		@applied_applicant = Offer.new(application_params.merge({status: "Assigned"}))
 
 		if @applied_applicant.save
 			render json: @applied_applicant, status: :created, location: @user
@@ -40,7 +40,7 @@ before_action :set_application, only: [:show, :update, :destroy]
 
   def for_course
     @course = Course.find(params[:course_id])
-    @assignments = AppliedApplicant.where(course_code: @course.course_code, status: "Assigned")
+    @assignments = Offer.where(course_code: @course.course_code, status: "Assigned")
     render json: @assignments
   end
   
@@ -50,9 +50,9 @@ before_action :set_application, only: [:show, :update, :destroy]
     saved_apps = []
     applications.map do |application|
       course_code = Course.find(application[:course_id]).course_code
-      unless AppliedApplicant.exists?(course_code: course_code, utorid: application[:utorid])
+      unless Offer.exists?(course_code: course_code, utorid: application[:utorid])
         course_code = Course.find(application[:course_id]).course_code
-        @assignment = AppliedApplicant.new(
+        @assignment = Offer.new(
           course_code: course_code,
           utorid: application[:utorid],
           status: "Assigned"
@@ -72,7 +72,7 @@ before_action :set_application, only: [:show, :update, :destroy]
 
 	# Use callbacks to share common setup or constraints between actions
 	def set_application
-		@application = AppliedApplicant.find(params[:id])
+		@application = Offer.find(params[:id])
 	end
 
 	def application_params

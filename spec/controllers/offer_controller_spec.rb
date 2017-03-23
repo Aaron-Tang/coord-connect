@@ -1,11 +1,11 @@
 require_relative "../rails_helper"
 require_relative "../spec_helper"
 
-RSpec.describe AppliedApplicantsController, type: :controller do
+RSpec.describe OfferController, type: :controller do
 
 	describe "GET index" do
 	    it "returns all courses" do
-	      applied_applicant = AppliedApplicant.create!(
+	      offer = Offer.create!(
 	      	application_id: 1, 
 	      	status: "P"
 	      	)
@@ -17,7 +17,7 @@ RSpec.describe AppliedApplicantsController, type: :controller do
   it "creates an assignment" do
     post :create, { applications: {course_code: "CSC108", utorid: "testuser"} }
 
-    assignment = AppliedApplicant.all.first
+    assignment = Offer.all.first
 
     expect(assignment.utorid).to eq("testuser")
     expect(assignment.course_code).to eq("CSC108")
@@ -26,12 +26,12 @@ RSpec.describe AppliedApplicantsController, type: :controller do
 
   it "returns a list of assignments by course id" do
     course_id = Course.create!(course_code: "CSC108").id
-    AppliedApplicant.create!(
+    Offer.create!(
       course_code: "CSC108",
       utorid: "testuser",
       status: "Assigned"
     )
-    AppliedApplicant.create!(
+    Offer.create!(
       course_code: "CSC207",
       utorid: "testuser2",
       status: "Assigned"
@@ -53,19 +53,19 @@ RSpec.describe AppliedApplicantsController, type: :controller do
          {course_id: c.id, utorid: "testuser2"}]
     }
 
-    expect(AppliedApplicant.all.length).to eq(2)
+    expect(Offer.all.length).to eq(2)
   end
 
 	describe "PATCH" do
 	    it "update application status" do
-	      @applied_applicant = AppliedApplicant.create!(
+	      @offer = Offer.create!(
 	      	application_id: 1, 
 	      	status: "P"
 	      	)
 
 				
-		put :update, id: @applied_applicant, applications: {:status => 'R'}
-		@applied_applicant.reload
+		put :update, id: @offer, applications: {:status => 'R'}
+		@offer.reload
 	      expect(response.body).to include("R")
 	    end
 	end	  
