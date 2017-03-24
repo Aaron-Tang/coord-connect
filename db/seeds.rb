@@ -53,7 +53,7 @@ Course.create([
 Offer.create([
 	{
 		:application_id => 1,
-		:status => "Accepted",
+		:status => "Assigned",
 		:utorid => "someid1",
 		:course_code => "CSC108",
 		:created_at => d2
@@ -68,14 +68,14 @@ Offer.create([
 		},
 	{
 		:application_id => 3,
-		:status => "Accepted",
+		:status => "Assigned",
 		:utorid => "someid3",
 		:course_code => "CSC165",
 		:created_at => d2
 		},
 	{
 		:application_id => 4,
-		:status => "Accepted",
+		:status => "Assigned",
 		:utorid => "someid4",
 		:course_code => "CSC236",
 		:created_at => d2
@@ -90,14 +90,14 @@ Offer.create([
 		},
 	{
 		:application_id => 6,
-		:status => "Accepted",
+		:status => "Assigned",
 		:utorid => "someid6",
 		:course_code => "CSC148",
 		:created_at => d2
 		},
 	{
 		:application_id => 7,
-		:status => "Accepted",
+		:status => "Assigned",
 		:utorid => "someid7",
 		:course_code => "CSC165",
 		:created_at => d2
