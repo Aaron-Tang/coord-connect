@@ -56,6 +56,16 @@ RSpec.describe OfferController, type: :controller do
     expect(Offer.all.length).to eq(2)
   end
 
+  it "allows you to update an assignment by providing the utorid and course_id" do
+    Offer.create!(course_code: "CSC108", utorid: "testuser", status: "Assigned")
+
+    put :update_assignment, params: {assignment: {utorid: "testuser", course_code: "CSC108", status: "Unassigned"}}
+
+    updated_offer = Offer.all.first
+
+    expect(updated_offer.status).to eq("Unassigned")
+  end
+
 	describe "PATCH" do
 	    it "update application status" do
 	      @offer = Offer.create!(

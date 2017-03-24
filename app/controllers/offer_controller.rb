@@ -68,6 +68,18 @@ before_action :set_application, only: [:show, :update, :destroy]
     render json: saved_apps
   end
 
+  def update_assignment
+    assignment_params = params[:assignment]
+    assignment = Offer.find_by(course_code: assignment_params[:course_code],
+                            utorid: assignment_params[:utorid])
+
+    if assignment.update_attributes(status: assignment_params[:status])
+ 			render json: assignment
+		else
+			render json: assignment.errors, status: :unprocessable_entity
+   end
+  end
+
 	private
 
 	# Use callbacks to share common setup or constraints between actions

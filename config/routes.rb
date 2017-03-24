@@ -11,4 +11,5 @@ Rails.application.routes.draw do
 	get '/courses/:id/applicants', to: 'course#all_applicants'
   get '/assignments/for_course/:course_id', to: 'offer#for_course'
   post '/assignments/bulk_create', to: 'offer#bulk_create'
+  put '/assignments/update_assignment', to: 'offer#update_assignment'
 end
