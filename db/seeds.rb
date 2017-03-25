@@ -109,5 +109,12 @@ Offer.create([
 		:utorid => "someid8",
 		:course_code => "CSC236",
 		:created_at => d2 
+		},
+	{
+		:application_id => 9,
+		:status => "Unassigned",
+		:utorid => "someid9",
+		:course_code => "CSC108",
+		:created_at => d2 
 		}
 	])
