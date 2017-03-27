@@ -2,7 +2,7 @@ require 'rest-client'
 require 'json'
 
 class CourseController < ApplicationController
-	before_action :set_course, only: [:show, :update, :destroy, :all_applicants]
+	before_action :set_course, only: [:show, :update, :destroy, :all_applicants, :on_time]
 
 	# GET /courses
 	def index
@@ -59,9 +59,10 @@ class CourseController < ApplicationController
 
 	# GET /courses/id/applicants
 	def all_applicants
-		@test = RestClient.get "http://localhost:3000/courses/#{@course.id}/applicants"
+	 	#@test = RestClient.get "http://localhost:3000/courses/#{@course.id}/applicants"
 
-		# TESTING @test = RestClient.get "http://localhost:3000/courses/1/applicants"
+		# TESTING 
+    @test = RestClient.get "http://localhost:3000/courses/1/applicants"
 
     applicants_json = JSON.parse(@test.body)
 
@@ -72,19 +73,42 @@ class CourseController < ApplicationController
         applicants_json = applicants_json.select { |a| a["department"] == query_params[:department] }
       end
       if query_params[:previous_ta_experience]
-        applicants_json = applicants_json.select { |a| "#{a['previous_ta_experience']}" == query_params[:department] }
+        applicants_json = applicants_json.select { |a| "#{a['previous_ta_experience']}" == query_params[:previous_ta_experience] }
+      end
+      if query_params[:program]
+      	applicants_json = applicants_json.select { |a| a["program"] == query_params[:program] }
+      end
+      if query_params[:year]
+        applicants_json = applicants_json.select { |a| "#{a["year"]}" == query_params[:year] }
+      end
+      if query_params[:work_status]
+        applicants_json = applicants_json.select { |a| "#{a["work_status"]}" == query_params[:work_status]}
+      end
+      if query_params[:previously_declined]
+        applicants_json = applicants_json.select { |a| "#{a["previously_declined"]}" == query_params[:previously_declined] }
       end
     end
-
+    p "*"*20
+    p applicants_json
 		render json: applicants_json
 	end
+
+  #/courses/1/on_time
+  def on_time
+     @all_applications = RestClient.get "http://localhost:3000/courses/1/applications" 
+     applications_json = JSON.parse(@all_applications.body) 
+     applications_json = applications_json.select { |a| a["created_at"] <= @course.deadline  }
+     render json: applications_json
+  end
 	
 	private
 
 	# Use callbacks to share common setup or constraints between actions
 	def set_course
 		@course = Course.find(params[:id])
+
 	end
+  
 
 	def course_params
 		params.require(:courses).permit(
