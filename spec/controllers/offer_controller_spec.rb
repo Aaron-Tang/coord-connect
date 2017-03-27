@@ -37,7 +37,9 @@ RSpec.describe OfferController, type: :controller do
       status: "Assigned"
     )
 
-    get :for_course, params: {course_id: course_id}
+    p Offer.all
+
+    get :for_course, params: {course_id: course_id, status: "Assigned"}
 
     expect(response.body).to include("testuser")
     expect(response.body).to_not include("testuser2")
