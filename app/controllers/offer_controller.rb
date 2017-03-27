@@ -69,6 +69,33 @@ before_action :set_application, only: [:show, :update, :destroy]
     render json: saved_apps
   end
 
+  def bulk_update_assignment
+    applications = params[:assignments]
+    saved_apps = []
+    applications.map do |application|
+      course_code = Course.find(application[:course_id]).course_code
+      assignment = Offer.find_by(course_code: course_code,
+                                  utorid: application[:utorid])
+      if assignment.nil?
+        @new_assignment = Offer.new(
+          course_code: course_code,
+          utorid: application[:utorid],
+          status: application[:status]
+        )
+        if not @new_assignment.save
+          render json: @new_assignment.errors, status: :unprocessable_entity
+        else
+          saved_apps.push(@new_assignment)
+        end
+      else
+        assignment.update_attributes(status: application[:status])
+        saved_apps.push(assignment)
+      end
+    end
+
+    render json: saved_apps
+  end
+
   def update_assignment
     assignment_params = params[:assignment]
     assignment = Offer.find_by(course_code: assignment_params[:course_code],
