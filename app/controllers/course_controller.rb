@@ -22,7 +22,7 @@ class CourseController < ApplicationController
 	# GET /courses/1
 	def show
     num_positions_assigned = Offer.where(course_code: @course.course_code, status:"Assigned").length
-		applicants_for_course = RestClient.get "http://localhost:3000/course/#{@course.id}/applicants"
+		applicants_for_course = RestClient.get "http://localhost:3000/courses/#{@course.id}/applicants"
     num_applicants_applied = JSON.parse(applicants_for_course).length
 		render json: @course.as_json.merge({number_ta_applied: num_applicants_applied, number_positions_assigned: num_positions_assigned})
 	end
@@ -59,7 +59,7 @@ class CourseController < ApplicationController
 
 	# GET /courses/id/applicants
 	def all_applicants
-		@test = RestClient.get "http://localhost:3000/course/#{@course.id}/applicants"
+		@test = RestClient.get "http://localhost:3000/courses/#{@course.id}/applicants"
 		render json: @test.body
 	end
 	
