@@ -60,7 +60,23 @@ class CourseController < ApplicationController
 	# GET /courses/id/applicants
 	def all_applicants
 		@test = RestClient.get "http://localhost:3000/courses/#{@course.id}/applicants"
-		render json: @test.body
+
+		# TESTING @test = RestClient.get "http://localhost:3000/courses/1/applicants"
+
+    applicants_json = JSON.parse(@test.body)
+
+    # FILTER BY QUERY PARAMS
+    query_params = params[:query]
+    if query_params
+      if query_params[:department]
+        applicants_json = applicants_json.select { |a| a["department"] == query_params[:department] }
+      end
+      if query_params[:previous_ta_experience]
+        applicants_json = applicants_json.select { |a| "#{a['previous_ta_experience']}" == query_params[:department] }
+      end
+    end
+
+		render json: applicants_json
 	end
 	
 	private

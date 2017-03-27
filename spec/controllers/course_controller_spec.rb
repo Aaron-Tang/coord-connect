@@ -18,19 +18,40 @@ RSpec.describe CourseController, type: :controller do
     end
   end
 
-  describe "GET course/1/applicants" do
+  describe "get course/1/applicants" do
     it "returns all applicants for course" do
       course = Course.create!(
-        course_code: "CSC301", 
-        description: "Intro to software enginnering", 
-        term: "F",
+        course_code: "csc301", 
+        description: "intro to software enginnering", 
+        term: "f",
         projected_course_enrollment: "250",
         students_per_TA: 20,
         instructor_id: "2",
-        requirements: "CSC300")
-      get :all_applicants, id: course.id
+        requirements: "csc300")
+      get :all_applicants, params: { 
+        id: course.id
+        }
     end
   end
+  
+  xit "filters all applicants for course" do
+    course = Course.create!(
+      course_code: "csc301", 
+      description: "intro to software enginnering", 
+      term: "f",
+      projected_course_enrollment: "250",
+      students_per_TA: 20,
+      instructor_id: "2",
+      requirements: "csc300")
+    get :all_applicants, params: { 
+      id: course.id, 
+      query: {
+        department: "ece", 
+        previous_ta_experience: true
+      } 
+    }
+  end
+
 
   # describe "POST create" do
   #   it "creates a user with all parameters" do
