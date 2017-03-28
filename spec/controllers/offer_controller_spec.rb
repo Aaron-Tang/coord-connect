@@ -14,6 +14,23 @@ RSpec.describe OfferController, type: :controller do
 	    end
 	end
 
+  it "returns offers given utorid and course_code" do
+    course_id = Course.create!(course_code: "CSC108").id
+    Offer.create!(
+      course_code: "CSC108",
+      utorid: "someid1",
+      status: "Assigned"
+    )
+    Offer.create!(
+      course_code: "CSC207",
+      utorid: "someid1",
+      status: "Assigned"
+    )
+    get :get_offer_for_application, params: {utorid: "someid1", course_id: course_id}
+    expect(response.body).to include("someid1")
+    expect(response.body).to_not include("csc207")
+  end 
+
   it "creates an assignment" do
     post :create, { applications: {course_code: "CSC108", utorid: "testuser"} }
 
@@ -81,5 +98,6 @@ RSpec.describe OfferController, type: :controller do
 	      expect(response.body).to include("R")
 	    end
 	end	  
+
 
 end

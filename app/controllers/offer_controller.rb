@@ -38,6 +38,7 @@ before_action :set_application, only: [:show, :update, :destroy]
 		@application.destroy
 	end
 
+  #/assignments/for_course/:course_id
   def for_course
     @course = Course.find(params[:course_id])
     @status = params[:status]
@@ -106,6 +107,13 @@ before_action :set_application, only: [:show, :update, :destroy]
 		else
 			render json: assignment.errors, status: :unprocessable_entity
    end
+  end
+
+  #offers/:utorid/:course_id
+  def get_offer_for_application
+    course_code = Course.find(params[:course_id]).course_code
+    assignment = Offer.where(utorid: params[:utorid], course_code: course_code)
+    render json: assignment
   end
 
 	private
