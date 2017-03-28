@@ -59,10 +59,10 @@ class CourseController < ApplicationController
 
 	# GET /courses/id/applicants
 	def all_applicants
-	 	#@test = RestClient.get "http://localhost:3000/courses/#{@course.id}/applicants"
+	 	@test = RestClient.get "http://localhost:3000/courses/#{@course.id}/applicants"
 
 		# TESTING 
-    @test = RestClient.get "http://localhost:3000/courses/1/applicants"
+   # @test = RestClient.get "http://localhost:3000/courses/1/applicants"
 
     applicants_json = JSON.parse(@test.body)
 
