@@ -52,8 +52,8 @@ RSpec.describe CourseController, type: :controller do
   #   }
   # end
 
-  describe "get course/1/applicants" do
-    it "returns all applicants for course" do
+  describe "checks if course has been applied to on time" do
+    xit "returns all applicants for course" do
       d1 = DateTime.new(2017, 3, 21)
       d2 = DateTime.new(2020, 3, 21)
       course = Course.create!(
