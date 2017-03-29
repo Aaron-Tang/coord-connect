@@ -57,6 +57,19 @@ class CourseController < ApplicationController
 
 	end
 
+  def append_status(applicants_json, course_code)
+    applicants_json.map do |a|
+      offer = Offer.find_by(utorid: a["utorid"], course_code: course_code)
+      if offer.nil?
+        a["status"] = "Unassigned"
+        a
+      else
+        a["status"] = offer.status
+        a
+     end
+    end
+  end
+
 	# GET /courses/id/applicants
 	def all_applicants
 	 	@test = RestClient.get "http://localhost:3000/courses/#{@course.id}/applicants"
@@ -65,8 +78,11 @@ class CourseController < ApplicationController
    # @test = RestClient.get "http://localhost:3000/courses/1/applicants"
 
     applicants_json = JSON.parse(@test.body)
+    # appends applicant status
+    applicants_json = append_status(applicants_json, @course.course_code)
 
     # FILTER BY QUERY PARAMS
+    # TODO: EXTRACT INTO FUNCTION -> THEN INTO ITS OWN CLASS
     query_params = params[:query]
     if query_params
       if query_params[:department]
