@@ -70,6 +70,18 @@ class CourseController < ApplicationController
     end
   end
 
+  def append_remaining_hours(applicants_json)
+    applicants_json.map do |a|
+      offers = Offer.where(utorid: a["utorid"], status: "Assigned")
+      applicant_courses = offers.map { |o| Course
+                                       .find_by(course_code: o.course_code)
+                                       .required_hours }
+      total_assigned_hours = applicant_courses.reduce(:+) || 0
+      a["remaining_teaching_hours"] -= total_assigned_hours
+      a
+    end
+  end
+
 	# GET /courses/id/applicants
 	def all_applicants
 	 	@test = RestClient.get "http://localhost:3000/courses/#{@course.id}/applicants"
@@ -102,6 +114,10 @@ class CourseController < ApplicationController
       end
       if query_params[:previously_declined]
         applicants_json = applicants_json.select { |a| "#{a["previously_declined"]}" == query_params[:previously_declined] }
+      end
+      if query_params[:remaining_teaching_hours]
+        applicants_json = append_remaining_hours(applicants_json)
+        applicants_json = applicants_json.select { |a| a["remaining_teaching_hours"] > 0 }
       end
     end
     p "*"*20
