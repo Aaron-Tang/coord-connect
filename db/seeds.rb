@@ -17,7 +17,8 @@ Course.create([
 		:projected_course_enrollment => 1000, 
 		:instructor_id => "Teacher_2",
 		:requirements => "None",
-		:created_at => d1
+		:created_at => d1,
+    :required_hours => 15
 		},	
 	{
 		:course_code => "CSC148",
@@ -27,7 +28,8 @@ Course.create([
 		:projected_course_enrollment => 1200,
 		:instructor_id => "Teacher_5",
 		:requirements => "CSC108",
-		:created_at => d1
+		:created_at => d1,
+    :required_hours => 5
 		},
 	{
 		:course_code => "CSC165",
@@ -37,7 +39,8 @@ Course.create([
 		:projected_course_enrollment => 1500,
 		:instructor_id => "Teacher_8",
 		:requirements => "None",
-		:created_at => d1
+		:created_at => d1,
+    :required_hours => 20
 		},
 	{
 		:course_code => "CSC236",
@@ -47,7 +50,8 @@ Course.create([
 		:projected_course_enrollment => 2000,
 		:instructor_id => "Teacher_18",
 		:requirements => "CSC148, CSC165",
-		:created_at => d1  
+		:created_at => d1,
+    :required_hours => 15
 	}])
 
 Offer.create([
