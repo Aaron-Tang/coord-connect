@@ -45,31 +45,8 @@ before_action :set_application, only: [:show, :update, :destroy]
     @assignments = Offer.where(course_code: @course.course_code, status: @status)
     render json: @assignments
   end
-  
-  def bulk_create
-    applications = params[:assignments]
 
-    saved_apps = []
-    applications.map do |application|
-      course_code = Course.find(application[:course_id]).course_code
-      unless Offer.exists?(course_code: course_code, utorid: application[:utorid])
-        course_code = Course.find(application[:course_id]).course_code
-        @assignment = Offer.new(
-          course_code: course_code,
-          utorid: application[:utorid],
-          status: "Assigned"
-        )
-        if not @assignment.save
-          render json: @assignment.errors, status: :unprocessable_entity
-        else
-          saved_apps.push(@assignment)
-        end
-      end
-    end
-
-    render json: saved_apps
-  end
-
+  #/assignments/bulk_update_assignment
   def bulk_update_assignment
     applications = params[:assignments]
     saved_apps = []
@@ -97,16 +74,17 @@ before_action :set_application, only: [:show, :update, :destroy]
     render json: saved_apps
   end
 
-  def update_assignment
-    assignment_params = params[:assignment]
-    assignment = Offer.find_by(course_code: assignment_params[:course_code],
-                            utorid: assignment_params[:utorid])
-
-    if assignment.update_attributes(status: assignment_params[:status])
- 			render json: assignment
-		else
-			render json: assignment.errors, status: :unprocessable_entity
-   end
+  #/assignments/bulk_update_applicant_assignments
+  def bulk_update_applicant_assignments
+    applications = params[:assignments]
+    saved_apps = []
+    applications.map do |application|
+      assignment = Offer.find_by(course_code: application[:course_code],
+                                  utorid: application[:utorid])
+      assignment.update_attributes(status: application[:status])
+      saved_apps.push(assignment)
+    end
+    render json: saved_apps
   end
 
   #offers/:utorid/:course_id
@@ -115,6 +93,13 @@ before_action :set_application, only: [:show, :update, :destroy]
     assignment = Offer.where(utorid: params[:utorid], course_code: course_code)
     render json: assignment
   end
+
+  #offers/:utorid
+  def get_all_offers_for_applicant
+    assignment = Offer.where(utorid: params[:utorid])
+    render json: assignment
+  end
+
 
 	private
 
