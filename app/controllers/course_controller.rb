@@ -92,33 +92,14 @@ class CourseController < ApplicationController
     applicants_json = JSON.parse(@test.body)
     # appends applicant status
     applicants_json = append_status(applicants_json, @course.course_code)
+    applicants_json = append_remaining_hours(applicants_json)
 
     # FILTER BY QUERY PARAMS
     # TODO: EXTRACT INTO FUNCTION -> THEN INTO ITS OWN CLASS
     query_params = params[:query]
     if query_params
-      if query_params[:department]
-        applicants_json = applicants_json.select { |a| a["department"] == query_params[:department] }
-      end
-      if query_params[:previous_ta_experience]
-        applicants_json = applicants_json.select { |a| "#{a['previous_ta_experience']}" == query_params[:previous_ta_experience] }
-      end
-      if query_params[:program]
-      	applicants_json = applicants_json.select { |a| a["program"] == query_params[:program] }
-      end
-      if query_params[:year]
-        applicants_json = applicants_json.select { |a| "#{a["year"]}" == query_params[:year] }
-      end
-      if query_params[:work_status]
-        applicants_json = applicants_json.select { |a| "#{a["work_status"]}" == query_params[:work_status]}
-      end
-      if query_params[:previously_declined]
-        applicants_json = applicants_json.select { |a| "#{a["previously_declined"]}" == query_params[:previously_declined] }
-      end
-      if query_params[:remaining_teaching_hours]
-        applicants_json = append_remaining_hours(applicants_json)
-        applicants_json = applicants_json.select { |a| a["remaining_teaching_hours"] > 0 }
-      end
+      query_service = ApplicantQueryService.new(applicants_json, query_params)
+      applicants_json = query_service.query
     end
     p "*"*20
     p applicants_json
