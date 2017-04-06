@@ -19,7 +19,25 @@ class ApplicantSortingService
 
     if @sort_by == "remaining_teaching_hours"
       @applicants = @applicants.sort_by do |applicant|
-        applicant["remaining_teaching_hours"]
+        -applicant["remaining_teaching_hours"]
+      end
+    end
+
+    if @sort_by == "year"
+      @applicants = @applicants.sort_by do |applicant|
+        -applicant["year"]
+      end
+    end
+
+    if @sort_by == "submitted_at"
+      @applicants = @applicants.sort_by do |applicant|
+        applicant["submitted_at"]
+      end
+    end
+
+    if @sort_by == "preferences"
+      @applicants = @applicants.sort_by do |applicant|
+        -applicant["preferences"]
       end
     end
 

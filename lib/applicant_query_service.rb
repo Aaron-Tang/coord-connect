@@ -51,6 +51,18 @@ class ApplicantQueryService
       }
     end
 
+    if @query[:family_name]
+      @applicants = @applicants.select { |a|
+        !(/#{@query[:family_name]}/.match(a["family_name"]).nil?)
+      }
+    end    
+
+    if @query[:utorid]
+      @applicants = @applicants.select { |a|
+        !(/#{@query[:utorid]}/.match(a["utorid"]).nil?)
+      }    
+    end
+
     @applicants
   end
 end

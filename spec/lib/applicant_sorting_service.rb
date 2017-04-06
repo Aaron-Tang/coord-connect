@@ -74,8 +74,41 @@ RSpec.describe ApplicantSortingService do
     expect(user["id"] == 2)
   end
 
-  it "sorts by remaining_teaching_hours" do
+  it "sorts by remaining_teaching_hours descending" do
     sort_by = "remaining_teaching_hours"
+    a = ApplicantSortingService.new(@applicants, sort_by).order
+    user1 = a[0]
+    user2 = a[1]
+
+    expect(a).to_not be_empty
+    expect(user1["id"] == 2)
+    expect(user2["id"] == 1)
+  end
+
+  it "sorts by year descending" do
+    sort_by = "year"
+    a = ApplicantSortingService.new(@applicants, sort_by).order
+    user1 = a[0]
+    user2 = a[1]
+
+    expect(a).to_not be_empty
+    expect(user1["id"] == 2)
+    expect(user2["id"] == 1)
+  end
+
+  it "sorts by submitted_at" do
+    sort_by = "submitted_at"
+    a = ApplicantSortingService.new(@applicants, sort_by).order
+    user1 = a[0]
+    user2 = a[1]
+
+    expect(a).to_not be_empty
+    expect(user1["id"] == 1)
+    expect(user2["id"] == 2)
+  end
+
+  it "sorts by preferences" do
+    sort_by = "preferences"
     a = ApplicantSortingService.new(@applicants, sort_by).order
     user1 = a[0]
     user2 = a[1]

@@ -118,6 +118,28 @@ RSpec.describe ApplicantQueryService do
     expect(user["id"]).to eq(2)
   end
 
+  it "searches by family_name" do
+    query = {family_name: "Cart"}
+
+    a = ApplicantQueryService.new(@applicants, query).query
+
+    user = a[0]
+    expect(a).to_not be_empty
+    expect(user["id"]).to eq(2)
+  end
+
+  it "searches by utorid" do
+    query = {utorid: "some"}
+
+    a = ApplicantQueryService.new(@applicants, query).query
+
+    user1 = a[0]
+    user2 = a[1]
+    expect(a).to_not be_empty
+    expect(user1["id"]).to eq(1)
+    expect(user2["id"]).to eq(2)
+  end
+
   private
 
   def generate_json_objects(applicant_list)
