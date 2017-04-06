@@ -108,6 +108,11 @@ class CourseController < ApplicationController
     if query_params
       query_service = ApplicantQueryService.new(applicants_json, query_params)
       applicants_json = query_service.query
+
+      if query_params[:sort_by]
+        sort_service = ApplicantSortingService.new(applicants_json, query_params[:sort_by])
+        applicants_json = sort_service.order
+      end
     end
     p "*"*20
     p applicants_json
