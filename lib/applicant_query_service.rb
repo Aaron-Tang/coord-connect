@@ -33,6 +33,17 @@ class ApplicantQueryService
       @applicants = @applicants.select { |a| a["remaining_teaching_hours"] > 0 }
     end
 
+    if @query[:preferences]
+      @applicants = @applicants.select { |a| a["preferences"] == @query[:preferences]}
+    end
+
+    if @query[:submitted_at]
+      @applicants = @applicants.select { |a| a["submitted_at"] <= @query[:submitted_at]}
+    end
+    if @query[:taken_in_past]
+      @applicants = @applicants.select { |a| a["taken_in_past"] == @query[:taken_in_past]}
+    end
+
     @applicants
   end
 end
