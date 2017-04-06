@@ -54,7 +54,15 @@ class CourseController < ApplicationController
 
 	# GET /courses/openings
 	def openings
-
+		open_courses = []
+		courses = Course.all
+		courses.map do |course|
+			num_positions_assigned = Offer.where(course_code: course.course_code, status:"Assigned").length
+			if num_positions_assigned < course.required_TAs
+				open_courses.append(course)
+			end
+		end
+		render json: open_courses
 	end
 
   def append_status(applicants_json, course_code)

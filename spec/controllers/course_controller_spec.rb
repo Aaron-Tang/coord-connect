@@ -73,5 +73,38 @@ RSpec.describe CourseController, type: :controller do
         }
     end
   end
-
+  
+  describe "checks if assigned offers for course is less than required" do
+    it "returns all course with openings" do
+      course1 = Course.create!(
+        course_code: "CSC301", 
+        description: "Intro to software enginnering", 
+        term: "F",
+        projected_course_enrollment: "250",
+        students_per_TA: 20,
+        instructor_id: "2",
+        required_TAs: 1)
+      course2 = Course.create!(
+        course_code: "CSC108", 
+        description: "Intro to programming", 
+        term: "F",
+        projected_course_enrollment: "250",
+        students_per_TA: 20,
+        instructor_id: "2",
+        required_TAs: 2)
+      offer1 = Offer.create!(
+        course_code: "CSC301",
+        utorid: "someid1",
+        status: "Assigned"
+      )
+      offer2 = Offer.create!(
+        course_code: "CSC108",
+        utorid: "someid2",
+        status: "Assigned"
+      )
+      get :openings
+      expect(response.body).to include("CSC108")
+      expect(response.body).to_not include("CSC301")
+    end
+  end
 end
