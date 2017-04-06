@@ -18,7 +18,7 @@ class ApplicantController < ApplicationController
         applicants_json = sort_service.order
       end
     end
-    page = params[:page]
+    #page = params[:page]
     render json: applicants_json
   end
 

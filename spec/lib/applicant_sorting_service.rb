@@ -2,7 +2,7 @@ require_relative "../rails_helper"
 require_relative "../spec_helper"
 require 'json'
 
-RSpec.describe ApplicantQueryService do
+RSpec.describe ApplicantSortingService do
   before(:all) do
     # TODO: fill the other attributes of the applicant here
     user1_json = {
@@ -54,49 +54,35 @@ RSpec.describe ApplicantQueryService do
     @applicants = generate_json_objects([user1_json, user2_json])
   end
 
-  it "queries by program" do
-    query = {program: "UG"}
+  it "sorts by family_name" do
+    sort_by = "family_name"
 
-    a = ApplicantQueryService.new(@applicants, query).query
+    a = ApplicantSortingService.new(@applicants, sort_by).order
     user = a[0]
 
     expect(a).to_not be_empty
     expect(user["id"] == 1)
   end
 
-  it "queries by previous_ta_experience" do
-    query = {previous_ta_experience: 'true'}
+  it "sorts by given_name" do
+    sort_by = "given_name"
 
-    a = ApplicantQueryService.new(@applicants, query).query
+    a = ApplicantSortingService.new(@applicants, sort_by).order
     user = a[0]
 
     expect(a).to_not be_empty
-    expect(user["id"]).to eq(2)
-  end
-  
-
-  it "queries by preferences" do
-    query = {preferences: 5}
-    a = ApplicantQueryService.new(@applicants, query).query
-    user = a[0]
-    expect(a).to_not be_empty
-    expect(user["id"]).to eq(1)
+    expect(user["id"] == 2)
   end
 
-  it "queries by deadline" do
-    query = {deadline: DateTime.new(2017, 3, 22)}
-    a = ApplicantQueryService.new(@applicants, query).query
-    user = a[0]
-    expect(a).to_not be_empty
-    expect(user["id"]).to eq(1)
-  end
+  it "sorts by remaining_teaching_hours" do
+    sort_by = "remaining_teaching_hours"
+    a = ApplicantSortingService.new(@applicants, sort_by).order
+    user1 = a[0]
+    user2 = a[1]
 
-  it "queries by previously_taken" do
-    query = {taken_in_past: true}
-    a = ApplicantQueryService.new(@applicants, query).query
-    user = a[0]
     expect(a).to_not be_empty
-    expect(user["id"]).to eq(2)
+    expect(user1["id"] == 1)
+    expect(user2["id"] == 2)
   end
 
   private

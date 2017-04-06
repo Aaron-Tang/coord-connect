@@ -43,7 +43,7 @@ RSpec.describe ApplicantQueryService do
       department_explanation: "i hate engineering",
       date_of_application: "2017-05-21T00:00:00.000Z",
       phone_number: "4169671111",
-      previously_declined: false,
+      previously_declined: true,
       remaining_teaching_hours: 40,
       preferences: 3,
       submitted_at: DateTime.new(2017, 3, 22),
@@ -74,6 +74,15 @@ RSpec.describe ApplicantQueryService do
     expect(user["id"]).to eq(2)
   end
   
+    it "queries by previously_declined" do
+    query = {previously_declined: 'true'}
+
+    a = ApplicantQueryService.new(@applicants, query).query
+    user = a[0]
+
+    expect(a).to_not be_empty
+    expect(user["id"]).to eq(2)
+  end
 
   it "queries by preferences" do
     query = {preferences: 5}

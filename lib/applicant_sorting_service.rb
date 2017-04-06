@@ -17,6 +17,12 @@ class ApplicantSortingService
       end
     end
 
+    if @sort_by == "remaining_teaching_hours"
+      @applicants = @applicants.sort_by do |applicant|
+        applicant["remaining_teaching_hours"]
+      end
+    end
+
     @applicants
   end
 end
