@@ -40,8 +40,15 @@ class ApplicantQueryService
     if @query[:submitted_at]
       @applicants = @applicants.select { |a| a["submitted_at"] <= @query[:submitted_at]}
     end
+
     if @query[:taken_in_past]
       @applicants = @applicants.select { |a| a["taken_in_past"] == @query[:taken_in_past]}
+    end
+
+    if @query[:given_name]
+      @applicants = @applicants.select { |a|
+        !(/#{@query[:given_name]}/.match(a["given_name"]).nil?)
+      }
     end
 
     @applicants
