@@ -99,6 +99,16 @@ RSpec.describe ApplicantQueryService do
     expect(user["id"]).to eq(2)
   end
 
+  it "searches by given_name" do
+    query = {given_name: "Eri"}
+
+    a = ApplicantQueryService.new(@applicants, query).query
+
+    user = a[0]
+    expect(a).to_not be_empty
+    expect(user["id"]).to eq(2)
+  end
+
   private
 
   def generate_json_objects(applicant_list)
