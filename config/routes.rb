@@ -17,4 +17,5 @@ Rails.application.routes.draw do
   get '/courses/:id/on_time', to: 'course#on_time'
   get '/assignments/:utorid', to: 'offer#get_all_offers_for_applicant'
   get '/assignments/:utorid/:course_id', to: 'offer#get_offer_for_application'
+  get '/applicants', to: 'applicant#index'
 end
