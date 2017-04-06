@@ -109,6 +109,15 @@ class CourseController < ApplicationController
       query_service = ApplicantQueryService.new(applicants_json, query_params)
       applicants_json = query_service.query
 
+      if query_params[:on_time]
+      	applicants_json = applicants_json.select { |a|
+      		p "IN HERE NIGGA"
+      		p a["submitted_at"]
+      		p @course.deadline
+      		DateTime.parse(a["submitted_at"]) <= @course.deadline
+      	}
+      end
+
       if query_params[:sort_by]
         sort_service = ApplicantSortingService.new(applicants_json, query_params[:sort_by])
         applicants_json = sort_service.order
@@ -123,7 +132,7 @@ class CourseController < ApplicationController
   def on_time
      @all_applications = RestClient.get "http://localhost:3000/courses/1/applications" 
      applications_json = JSON.parse(@all_applications.body) 
-     applications_json = applications_json.select { |a| a["created_at"] <= @course.deadline  }
+     applications_json = applications_json.select { |a| a["submitted_at"] <= @course.deadline  }
      render json: applications_json
   end
 	

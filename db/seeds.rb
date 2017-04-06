@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 d1 = DateTime.new(2017, 3, 21)
-d2 = DateTime.new(2017, 2, 22)
+d2 = DateTime.new(2017, 2, 23)
 
 Course.create([
 	{
@@ -18,7 +18,8 @@ Course.create([
 		:instructor_id => "Teacher_2",
 		:requirements => "None",
 		:created_at => d1,
-    :required_hours => 15
+    	:required_hours => 15,
+    	:deadline => d2
 		},	
 	{
 		:course_code => "CSC148",
@@ -29,7 +30,8 @@ Course.create([
 		:instructor_id => "Teacher_5",
 		:requirements => "CSC108",
 		:created_at => d1,
-    :required_hours => 5
+	    :required_hours => 5,
+	    :deadline => d2
 		},
 	{
 		:course_code => "CSC165",
@@ -40,7 +42,8 @@ Course.create([
 		:instructor_id => "Teacher_8",
 		:requirements => "None",
 		:created_at => d1,
-    :required_hours => 20
+	    :required_hours => 20,
+	    :deadline => d2
 		},
 	{
 		:course_code => "CSC236",
@@ -51,7 +54,8 @@ Course.create([
 		:instructor_id => "Teacher_18",
 		:requirements => "CSC148, CSC165",
 		:created_at => d1,
-    :required_hours => 15
+	    :required_hours => 15,
+	    :deadline => d2
 	}])
 
 Offer.create([
