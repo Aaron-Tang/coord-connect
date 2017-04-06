@@ -58,7 +58,7 @@ class CourseController < ApplicationController
 		courses = Course.all
 		courses.map do |course|
 			num_positions_assigned = Offer.where(course_code: course.course_code, status:"Assigned").length
-			if num_positions_assigned < course.required_TAs
+			if num_positions_assigned < course.projected_course_enrollment/30
 				open_courses.append(course)
 			end
 		end
