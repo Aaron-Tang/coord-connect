@@ -6,17 +6,9 @@ class CourseController < ApplicationController
 
 	# GET /courses
 	def index
-		@filterrific = initialize_filterrific(
-			Course, 
-			params[:filterrific],
-			:select_options => {
-				sorted_by: Course.options_for_sorted_by
-			}	
-		) or return
-		@courses = @filterrific.find.page(params[:page])
+		@courses = Courses.all
 		
 		render json: @courses
-
 	end
 
 	# GET /courses/1
