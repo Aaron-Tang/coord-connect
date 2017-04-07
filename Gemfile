@@ -43,5 +43,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'rest-client', '~> 2.0', '>= 2.0.1'
-gem 'filterrific'
-gem 'will_paginate'
+gem 'faker'
