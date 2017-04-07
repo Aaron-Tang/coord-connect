@@ -6,7 +6,7 @@ class CourseController < ApplicationController
 
 	# GET /courses
 	def index
-		@courses = Courses.all
+		@courses = Course.all
 		
 		render json: @courses
 	end
